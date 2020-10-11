@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <title>eMercado - Todo lo que busques está aquí</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/dropzone.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="site-header sticky-top py-1 bg-dark">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
+      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
+      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
+      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Usuario
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <a class="dropdown-item" href="cart.html">Mi carrito</a>          
+          <a class="dropdown-item" href="#">Mi perfil</a>
+          <a class="dropdown-item" href="index.html">Cerrar sesión</a>
+        </ul>
+
+  </nav>
+  <main role="main">
+    <div class="text-center p-4">
+      <h2>Carrito de compras</h2>
+    </div>
+    <div class="container">
+      <hr class="my-3">
+      <div class="row list-group-item-action">
+        <div class="col-1"></div>
+        <div class="col-4">
+            <h4><strong>Nombre artículo</strong></h4>
+        </div>
+        <div class="col-2">
+            <h4><strong>Precio</strong></h4>
+        </div>
+        <div class="col-2">
+            <h4><strong>Cantidad</strong></h4>
+        </div>
+        <div class="col-2">
+            <h4><strong>Subtotal</strong></h4>
+        </div>
+      </div>
+
+      <hr class="precio">
+      <div id="carritoItems" class="precio">
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-6"></div>
+          <h5><strong>Cantidad artículos:</strong><span id="cantidadArticulos"></span></h5>
+          <h5><strong>Subtotal (U$):</strong><span id="subtotalCompra"></span></h5>
+        </div>
+        <div class="col-6">
+          <br>
+
+          <form>
+            <h5><strong>Tipo de envio:</strong></h5>
+            <fieldset class="form-group">
+              <div class="row">
+              <div class="col-sm-9">
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" onclick="calcularTotalFinal(0)" name="tipoEnvio" id="tipoEnvio1" value="option1">
+                      <label class="form-check-label" for="tipoEnvio1">
+                          Premium (2 a 5 días) - 15% sobre el subtotal
+                      </label>
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="radio" onclick="calcularTotalFinal(1)" name="tipoEnvio" id="tipoEnvio2" value="option2">
+                      <label class="form-check-label" for="tipoEnvio2">
+                          Express (5 a 8 días) - 7% sobre el subtotal
+                      </label>
+                  </div>
+                  <div class="form-check disabled">
+                      <input class="form-check-input" type="radio" onclick="calcularTotalFinal(2)" name="tipoEnvio" id="tipoEnvio3" value="option3">
+                      <label class="form-check-label" for="tipoEnvio3">
+                          Standard (12 a 15 días) - 5% sobre el subtotal
+                      </label>
+                  </div>
+              </div>
+              </div>
+          </fieldset>
+
+<h3><strong>Total en U$ (incluye el envio):<span id="totalCompra"></span></strong></h3><br>
+
+          </form>
+          <form>
+            <h5>Direccion de envio:</h5>
+            <input type="radio" id="envioO" name="envio" onclick="mostrarDireccion(1)" value="envioO">
+            <label for="envioO">Envío a domicilio</label>
+            <span id="direccion"></span>
+          </form>
+            <br>
+
+            <form> 
+            <h5>Forma de pago:</h5>
+            <input type="radio" id="pagoenagencia" name="pago" value="pagoenagencia">
+            <label for="redpagos">Agencia de cobranza</label>
+            <input type="radio" id="mercadopago" name="pago" value="mercadopago">
+            <label for="mercadopago">Mercado Pago</label>
+            <input type="radio" id="paypal" name="pago" value="paypal">
+            <label for="paypal">Tarjeta de credito</label>
+            <br>
+            <input type="submit" value="Realizar compra">
+          </form>
+        </div>
+    </div>
+  </main>
+  <!--<div class="container p-5">
+    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
+      <h4 class="alert-heading">¡A trabajar! :)</h4>
+      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 11/10/2020) y Entrega 6 (Fecha de entrega: 25/10/2020).</p>
+      <hr>
+      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+    </div>
+  </div>-->
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/dropzone.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+
+</html>
