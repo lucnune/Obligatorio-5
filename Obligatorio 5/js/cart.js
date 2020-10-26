@@ -1,10 +1,9 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
 var itemsCarrito = {};
 var itemActual;
 var subtotalFinal;
 var total;
+var opcionEnvio = 0;
+var invalidos;
 
 function calcularTotales(){
     let camposPrecio = document.getElementsByClassName("total");
@@ -55,6 +54,11 @@ function mostrarItems(){
     calcularTotales();
 }
 
+function borrarArticulo(num){
+    itemsCarrito.articles.splice(num, 1);
+    mostrarItems();
+}
+
 function calcularTotalFinal(num){
     switch(num){
         case 0:
@@ -66,60 +70,108 @@ function calcularTotalFinal(num){
         case 2:
             document.getElementById("totalCompra").innerHTML = Math.ceil(subtotalFinal * 1.05);
         break;
-        default:
+        default: 
+    }
+}
 
+/*Confirma domicilio*/
+function noEnvio(){
+    document.getElementById("totalCompra").innerHTML = Math.ceil(subtotalFinal);
+}
+
+function confirmarDireccion(){
+    var elementos_direccion = document.getElementsByClassName("direccionForm");
+    invalidos = 0;
+
+    for (let i = 0; i < elementos_direccion.length; i++){
+        if (elementos_direccion[i].value === "" || elementos_direccion[i].value === "Elegir..."){
+            elementos_direccion[i].classList.add("is-invalid");
+            elementos_direccion[i].classList.remove("is-valid");
+        } else {
+            elementos_direccion[i].classList.add("is-valid");
+            elementos_direccion[i].classList.remove("is-invalid");
+        }
+    }
+
+    for (let i = 0; i < elementos_direccion.length; i++){
+        if (elementos_direccion[i].classList.contains("is-invalid")){
+            invalidos = invalidos + 1;
+        }
+    }
+
+    if (invalidos){
+        alert("Debe llenar todos los campos.");
+    } 
+}
+
+/*Confirma pago*/
+function envioActivo(num){
+    opcionEnvio = num;
+    switch(opcionEnvio){
+        case 0:
+            var elemento_transferencia = document.getElementsByClassName("transferenciaForm");
+            elemento_transferencia[0].classList.remove("is-valid");
+            elemento_transferencia[0].classList.remove("is-invalid");
+        break;
+        case 1:
+            var elementos_pago = document.getElementsByClassName("tarjetaForm");
+            for (let i = 0; i < elementos_pago.length; i++){
+                elementos_pago[i].classList.remove("is-valid");
+                elementos_pago[i].classList.remove("is-invalid");
+            }
+        break;
     }
 }
-function mostrarDireccion(mostrar){
-    if (mostrar){
-        document.getElementById("direccion").innerHTML=`
-        <form>
-            <div class="form-group">
-                <label for="inputAddress">Dirección</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="Dirección..." required>
-            </div>
-            <div class="form-group">
-                <label for="inputAddress2">Info adicional dirección</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Numero de puerta..." required>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">Ciudad</label>
-                    <input type="text" class="form-control" id="inputCity" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputState">Departamento</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Elegir...</option>
-                        <option>Artigas</option>
-                        <option>Canelones</option>
-                        <option>Colonia</option>
-                        <option>Durazno</option>
-                        <option>Florida</option>
-                        <option>Fray Bentos</option>
-                        <option>Maldonado</option>
-                        <option>Mercedes</option>
-                        <option>Melo</option>
-                        <option>Minas</option>
-                        <option>Montevideo</option>
-                        <option>Paysandú</option>
-                        <option>Rivera</option>
-                        <option>Rocha</option>
-                        <option>Salto</option>
-                        <option>San José</option>
-                        <option>Tacuarembó</option>
-                        <option>Treinta y Tres</option>
-                        <option>Trinidad</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </form>`;
-    } else {
-        document.getElementById("direccion").innerHTML="";
-        document.getElementById("totalCompra").innerHTML = Math.ceil(subtotalFinal);
+
+
+function confirmarEnvio(){
+    switch(opcionEnvio){
+        case 0:
+            var elementos_pago = document.getElementsByClassName("tarjetaForm");
+            invalidos = 0;
+        
+            for (let i = 0; i < elementos_pago.length; i++){
+                if (elementos_pago[i].value === ""){
+                    elementos_pago[i].classList.add("is-invalid");
+                    elementos_pago[i].classList.remove("is-valid");
+                } else {
+                    elementos_pago[i].classList.add("is-valid");
+                    elementos_pago[i].classList.remove("is-invalid");
+                }
+            }
+        
+            for (let i = 0; i < elementos_pago.length; i++){
+                if (elementos_pago[i].classList.contains("is-invalid")){
+                    invalidos = invalidos + 1;
+                }
+            }
+        
+            if (invalidos){
+                alert("Complete todos los campos.");
+            } else {
+                $('#modalEnvio').modal('hide');
+            } 
+        break;
+        case 1:
+            var elemento_transferencia = document.getElementsByClassName("transferenciaForm");
+            var j = 0;
+            if (elemento_transferencia[j].value === ""){
+                elemento_transferencia[j].classList.add("is-invalid");
+                elemento_transferencia[j].classList.remove("is-valid");
+            } else {
+                elemento_transferencia[j].classList.add("is-valid");
+                elemento_transferencia[j].classList.remove("is-invalid");
+            }
+
+            if (elemento_transferencia[j].classList.contains("is-invalid")){
+                alert("Complete todos los campos.");
+            } else {
+                $('#modalEnvio').modal('hide');
+            }
+        break;
     }
 }
+
 document.addEventListener("DOMContentLoaded", function(e){
     getJSONData(CART_INFO_URL).then(function(resultObj){
         itemsCarrito = resultObj.data;
