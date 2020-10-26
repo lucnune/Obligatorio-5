@@ -16,7 +16,7 @@
   <link href="css/dropzone.css" rel="stylesheet">
 </head>
 
-<body>
+<body>  
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
       <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
@@ -97,38 +97,129 @@
           </fieldset>
 
 <h3><strong>Total en U$ (incluye el envio):<span id="totalCompra"></span></strong></h3><br>
-
           </form>
+
+<!--Envio--->
           <form>
-            <h5>Direccion de envio:</h5>
-            <input type="radio" id="envioO" name="envio" onclick="mostrarDireccion(1)" value="envioO">
-            <label for="envioO">Envío a domicilio</label>
+            <h5>Envío a domicilio</h5>
             <span id="direccion"></span>
-          </form>
-            <br>
+            <div class="form-group">
+                <input type="text" class="form-control" id="inputAddress" placeholder="Dirección..." required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Numero de puerta..." required>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Ciudad</label>
+                    <input type="text" class="form-control" id="inputCity" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputState">Departamento</label>
+                    <select id="inputState" class="form-control">
+                        <option selected>Elegir...</option>
+                        <option>Artigas</option>
+                        <option>Canelones</option>
+                        <option>Colonia</option>
+                        <option>Durazno</option>
+                        <option>Florida</option>
+                        <option>Fray Bentos</option>
+                        <option>Maldonado</option>
+                        <option>Mercedes</option>
+                        <option>Melo</option>
+                        <option>Minas</option>
+                        <option>Montevideo</option>
+                        <option>Paysandú</option>
+                        <option>Rivera</option>
+                        <option>Rocha</option>
+                        <option>Salto</option>
+                        <option>San José</option>
+                        <option>Tacuarembó</option>
+                        <option>Treinta y Tres</option>
+                        <option>Trinidad</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
 
-            <form> 
-            <h5>Forma de pago:</h5>
-            <input type="radio" id="pagoenagencia" name="pago" value="pagoenagencia">
-            <label for="redpagos">Agencia de cobranza</label>
-            <input type="radio" id="mercadopago" name="pago" value="mercadopago">
-            <label for="mercadopago">Mercado Pago</label>
-            <input type="radio" id="paypal" name="pago" value="paypal">
-            <label for="paypal">Tarjeta de credito</label>
+<!--Forma de pago--->
             <br>
-            <input type="submit" value="Realizar compra">
+            <button class="btn btn-link" type="button" data-toggle="modal" data-target="#modalEnvio">Seleccionar forma de pago...</button>         
+            <br>
+            <button type="button" class="btn btn-primary">Realizar compra</button>
           </form>
         </div>
     </div>
-  </main>
-  <!--<div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 11/10/2020) y Entrega 6 (Fecha de entrega: 25/10/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+</form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+  <button type="button" class="btn btn-primary" onclick="confirmarDireccion()">Confirmar</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="modalEnvio" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel2">Tipo pago</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <div class="row">
+      <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="pago_tarjeta" onclick="envioActivo(0)" name="pago">
+        <label for="pago_tarjeta" class="custom-control-label">Tarjeta de crédito</label>
+      </div>
     </div>
-  </div>-->
+    <hr>
+    <div class="form-group">
+      <label for="tarjetaNombre">Nombre completo</label>
+      <input type="text" class="form-control tarjetaForm" id="tarjetaNombre" placeholder="Nombre y apellido..." >
+    </div>
+    <div class="form-group">
+      <label for="tarjetaNumero">Número</label>
+      <input type="number" class="form-control tarjetaForm" id="tarjetaNumero" placeholder="Número tarjeta..." >
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="tarjetaCVV">CVV</label>
+        <input type="number" size="3" class="form-control tarjetaForm" id="tarjetaCVV" >
+      </div>
+      <div class="form-group col-md-6">
+        <label for="tarjetaVenc">Vencimiento</label>
+        <input type="text" size="5" class="form-control tarjetaForm" id="tarjetaVenc" >
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="pago_bancario" onclick="envioActivo(1)" name="pago">
+        <label for="pago_bancario" class="custom-control-label">Transferencia bancaria</label>
+      </div>
+    </div>   
+    <hr>
+    <div class="form-group">
+      <label for="transferenciaNumero">Número cuenta</label>
+      <input type="number" class="form-control transferenciaForm" id="transferenciaNumero" >
+    </div>       
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-primary" onclick="confirmarEnvio()">Confirmar</button>
+  </div>
+</div>
+</div>
+</div>
+</div>
+  
+  <!--Lo que traia--->
   <footer class="text-muted">
     <div class="container">
       <p class="float-right">
